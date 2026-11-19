@@ -1,0 +1,145 @@
+# charter/example.yaml — worked example of an astrid charter
+# This file is a GENERIC worked example: every value below is either a placeholder
+# or a TEST-NET address. Nothing here points at a real machine.
+# Real deployments: mirror this structure against YOUR box's live facts — every
+# line must be a true statement about the machine today (the compile-today law).
+charter_version: 1
+revision: 1
+identity:
+  name: example                 # matches hostname(1)
+  role: demo-prototype          # worked example, NOT a production service box
+  tailscale: 203.0.113.10       # example value only (RFC 5737 TEST-NET-3)
+  lineage: "fresh install to the astrid identity"
+
+substrate:
+  os: Ubuntu 26.04 LTS
+  kernel: 7.0.0-43-generic
+  seat: single, wlroots 0.18 compositor (astrid-shell)
+  boot:
+    efi: /dev/sda1 (vfat)
+    system: /dev/sda2 (ext4)
+
+disks:
+  physical:
+    - name: sda
+      size: 223.6G
+      layout:
+        sda1: efi, 1G
+        sda2: boot, 2G
+        sda3: LVM pv, 220.5G
+  logical:
+    ubuntu--vg/ubuntu--lv: { mount: "/", size: 100G, used: 7.7G }
+  note: LVM leaves volume-group headroom — record it, never assume full-disk
+
+network:
+  interfaces:
+    eth0: { state: up, ipv4: "none (example box is v6-only on this LAN)", note: "record the intended answer, not the guess" }
+    wlan0: { state: up, ssid: "<your-ssid>", ipv4: "192.0.2.10/24 (dhcp)", note: "the box's IPv4 path — where it comes from is facts, not intent" }
+    tailscale0: { ipv4: 203.0.113.10 }
+  management_plane: tailscale-ssh
+  exposure:
+    - listen: 7731/tcp   # daemon HTTP (/health, /input, /latency.json)
+      bind: loopback only
+    - listen: 7741/tcp   # daemon to face websocket
+      bind: loopback only
+    - listen: 22/tcp
+      bind: "mgmt LAN + tailnet only — public ssh closed"
+
+firewall:
+  engine: ufw
+  policy: { incoming: deny, outgoing: allow, routed: disabled }
+  inbound:
+    - "22/tcp from 192.0.2.0/24  # mgmt-lan"
+    - "any on tailscale0 (v4+v6)  # tailnet-mgmt"
+
+services:
+  astrid.target:
+    type: native-units           # compiles to systemd units today — the compile-today law
+    units:
+      astrid-shell.service:  { state: running, role: "wlroots compositor, single seat" }
+      astrid-daemon.service: { state: running, role: "assistant runtime", health: "GET http://127.0.0.1:7731/health returns 200" }
+      astrid-face.service:   { state: running, role: "browser overlay (the face)" }
+    contract: "target enabled at boot; unit restarts only, never target restart"
+  astrid-reconcile:
+    type: "systemd system unit + timer"
+    cadence: "hourly, persistent (root) — runs tools/reconcile.py; drift transition → operator alert; silent otherwise"
+    state: "/var/lib/astrid/{drift.json,plan.json,reconcile-state.json}"
+  astrid-ship:
+    type: "systemd system unit + timer"
+    cadence: "daily 05:00 UTC, persistent — tools/ship.py to the warehouse; failure → operator alert"
+
+secrets:
+  principle: keys live at the operator; the box stores the minimum
+  on_box: >
+    /etc/netplan/<your-netplan>.yaml (0600) — wifi psk, unavoidable OS credential;
+    /etc/astrid/alert.token (0600) — operator alert lane, sends only;
+    /etc/astrid/warehouse_key (0600 root) — forced-command push key.
+
+users:
+  - name: bot
+    type: sole operator account
+
+backups:
+  timer: astrid-backup.timer (daily, persistent)
+  unit: astrid-backup.service (oneshot)
+  payload: >
+    /var/backups/astrid/{home,etc}-YYYY-MM-DD.tar.gz — operator home (large model
+    weights excluded: sha-pinned, re-provisionable, shas pinned in this charter),
+    gzip -t verified, keep-last-7.
+  off_box: >
+    astrid-ship.timer (daily) → tools/ship.py over a forced-command key to the
+    warehouse host (stdin pipes, sha256 verified on the receive side, receiver
+    keeps 29 files, manifest.log as proof); /var/lib/astrid/ship-state.json —
+    the reconcile checks its age (freshness invariant).
+
+brain:              # two-tier split: in-face perception → on-box stem → pluggable architect
+  stem:
+    runtime: "llama.cpp (ubuntu-x64 CPU build)"
+    model_primary: "a small instruct model, Q4_K_M — sha256 pinned in the file; coexists with in-face ASR inside 3.5 GB RAM"
+    service: "astrid-stem.service (user unit, enabled), loopback :8811 only"
+    models_dir: "/var/lib/astrid-models (weights are system artifacts, not home files)"
+    offline_proof: >-
+      grammar-governed drift_report emitted with zero routes
+      (unshare -n): schema-valid JSON, applies_without_gate pinned
+      false by the decode-time grammar, invariant-violating request
+      rejected with needs_human=true.
+  face: "perception in-browser: voice report → whisper-tiny.q8 WASM → transcript → stem grammar-governed drift_report, with the box's internet fully cut"
+  architect: "deliberation tier — pluggable, not provisioned on this box (a charter field, not hardware)"
+
+autonomy:           # L0 watch-only · L1 propose · L2 apply-with-review · L3 self-apply (not granted here)
+  default: L1
+  domains:
+    services:  L1   # may propose unit edits; apply behind a review gate
+    filesystem: L0  # read-only observations only
+    network:   L1   # may propose firewall tightenings; never opens
+    packages:  L0
+    secrets:   L0   # never creates, moves, or reads secrets above listing existence
+
+invariants:         # machine-checked on every reconcile; failure = the machine's first job
+  - "daemon 7731 binds loopback only"
+  - "face 7741 binds loopback only"
+  - "no container runtime on this machine"
+  - "sole user is bot"
+  - "GET /health returns 200"
+  - "ufw default deny incoming"
+  - "ssh 22 unreachable outside mgmt/tailnet"
+  - "backup archives verify (gzip -t) and keep-7 holds"
+  - "stem 8811 binds loopback only"
+  - "off-box warehouse shipment fresh within 48h (ship-state manifest)"
+
+goals:              # the machine's own first goals — prose, review-gated, never auto-applied
+  - id: G1
+    text: "restrict ssh 22 to mgmt ranges"
+    status: "closed — example: ufw rules live, reconnect re-verified on the reference box"
+  - id: G2
+    text: "ship a daily backup timer with verification"
+    status: "shipped — example: timer live, first run verified"
+  - id: G3
+    text: "account for every interface (v4 path vs v6-only)"
+    status: "closed — example: intended answer recorded and verified live"
+  - id: G4
+    text: "ship backup archives off-box (needs a key exchange with the warehouse host)"
+    status: "shipped — example: key exchanged, ship sha-verified on the far side, freshness invariant"
+  - id: G5
+    text: "voice loop end to end with the box off the internet"
+    status: "closed — example: spoken report → ASR → governed stem JSON with the internet cut; live mic pending hardware"
