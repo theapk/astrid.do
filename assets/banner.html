@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 320px; overflow: hidden; }
+  body {
+    background: #0d1117;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px 0 56px; position: relative;
+  }
+  /* faint grid */
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(#21262d 1px, transparent 1px),
+      linear-gradient(90deg, #21262d 1px, transparent 1px);
+    background-size: 40px 40px; opacity: .55;
+  }
+  .left { position: relative; z-index: 2; }
+  .name {
+    color: #e6edf3; font-size: 86px; font-weight: 700; letter-spacing: 2px; line-height: 1;
+  }
+  .name .cursor {
+    display: inline-block; width: 40px; height: 78px; background: #3fb950;
+    margin-left: 10px; vertical-align: -8px;
+  }
+  .tag {
+    margin-top: 18px; color: #8b949e; font-size: 21px; letter-spacing: .5px;
+  }
+  .tag b { color: #e6edf3; font-weight: 600; }
+  .term {
+    position: relative; z-index: 2; width: 470px;
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.45);
+  }
+  .bar {
+    display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid #30363d;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .d1 { background: #ff5f57; } .d2 { background: #febc2e; } .d3 { background: #28c840; }
+  .pre { padding: 18px 18px 20px; font-size: 17px; line-height: 1.85; white-space: pre; }
+  .c { color: #8b949e; }
+  .d { color: #a4aab4; }
+  .w { color: #e6edf3; }
+  .g { color: #3fb950; }
+  .y { color: #d29922; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="name">astrid<span class="cursor"></span></div>
+    <div class="tag">a <b>requirements-file</b> server</div>
+  </div>
+  <div class="term">
+    <div class="bar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span></div>
+    <div class="pre"><span class="c">charter:</span> <span class="w">example.yaml</span>
+<span class="w">compile</span>  <span class="g">ok</span>  <span class="c">schema Draft7</span>
+<span class="w">reconcile</span> <span class="g">10/10 ok</span>  <span class="c">hourly, silent</span>
+<span class="w">gate</span>      <span class="g">armed</span>  <span class="y">needs_human</span>
+<span class="d"># the machine holds itself to the file</span></div>
+  </div>
+</body>
+</html>

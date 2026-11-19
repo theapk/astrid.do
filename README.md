@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.png" alt="astrid — a requirements-file server" width="960"></p>
+
 # astrid — a requirements-file server
 
 Machines like this are **AS — an Astrid Server, not an OS**. One charter file
