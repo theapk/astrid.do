@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:1280px; height:760px; overflow:hidden; }
+  body { background:#0d1117; font-family: ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono",monospace; }
+  h1 { position:absolute; left:40px; top:22px; color:#e6edf3; font-size:22px; font-weight:600; letter-spacing:.4px; }
+  h1 span { color:#8b949e; font-weight:400; font-size:14px; margin-left:14px; }
+</style>
+</head>
+<body>
+<h1>how astrid holds a machine to its file<span>the reconciliation loop</span></h1>
+
+<svg width="1280" height="760" viewBox="0 0 1280 760">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#161c26" stroke-width="1"/>
+    </pattern>
+    <marker id="m-gray"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker>
+    <marker id="m-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/></marker>
+    <marker id="m-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d29922"/></marker>
+    <marker id="m-red"   viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f85149"/></marker>
+    <marker id="m-slate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4d5966"/></marker>
+  </defs>
+
+  <rect width="1280" height="760" fill="url(#grid)"/>
+
+  <!-- on-box boundary -->
+  <rect x="32" y="96" width="1216" height="592" rx="14" fill="none" stroke="#238636" stroke-width="1.3" stroke-dasharray="8 5" opacity=".55"/>
+  <text x="1240" y="692" fill="#3fb950" font-size="11.5" opacity=".85" letter-spacing="1.5" text-anchor="end">ON THE BOX · NO INTERNET · THE BRAIN HOLDS ZERO ROOT</text>
+
+  <!-- ================= wires (behind boxes) — all fill=none ================= -->
+  <path d="M 294 206 L 336 206" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#m-gray)"/>
+  <path d="M 554 206 L 606 206" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#m-gray)"/>
+  <path d="M 690 276 L 690 296" fill="none" stroke="#3fb950" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#m-green)"/>
+  <path d="M 1020 276 L 1020 304" fill="none" stroke="#d29922" stroke-width="1.6" marker-end="url(#m-amber)"/>
+  <path d="M 900 370 L 296 370 L 296 462" fill="none" stroke="#8b949e" stroke-width="1.6" marker-end="url(#m-gray)"/>
+  <path d="M 214 618 L 214 598" fill="none" stroke="#f85149" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#m-red)"/>
+  <path d="M 404 529 L 452 529" fill="none" stroke="#d29922" stroke-width="1.6" marker-end="url(#m-amber)"/>
+  <path d="M 730 529 L 762 529" fill="none" stroke="#3fb950" stroke-width="1.6" marker-end="url(#m-green)"/>
+  <path d="M 545 592 L 545 610" fill="none" stroke="#f85149" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#m-red)"/>
+  <path d="M 990 516 L 1180 516 L 1180 112 L 302 112 L 302 130" fill="none" stroke="#4d5966" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#m-slate)"/>
+
+  <!-- ================= boxes ================= -->
+  <!-- charter.yaml -->
+  <rect x="64" y="136" width="230" height="140" fill="#161b22" rx="8" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="80" y="170" fill="#e6edf3" font-size="16" font-weight="600">charter.yaml</text>
+  <text x="80" y="196" fill="#8b949e" font-size="11">the whole machine, one file</text>
+  <text x="80" y="216" fill="#8b949e" font-size="11">every line a fact about the</text>
+  <text x="80" y="232" fill="#8b949e" font-size="11">box, as it stands today</text>
+  <text x="80" y="258" fill="#a78bfa" font-size="11">git commit = generation pointer</text>
+
+  <!-- charter.json -->
+  <rect x="344" y="136" width="210" height="140" fill="#161b22" rx="8" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="360" y="170" fill="#e6edf3" font-size="16" font-weight="600">charter.json</text>
+  <text x="360" y="196" fill="#8b949e" font-size="11">schema-validated compile</text>
+  <text x="360" y="216" fill="#8b949e" font-size="11">machine reads JSON only,</text>
+  <text x="360" y="234" fill="#8b949e" font-size="11">stdlib, no YAML parser</text>
+  <text x="360" y="258" fill="#22d3ee" font-size="11">bad schema = no generation</text>
+
+  <!-- reconcile -->
+  <rect x="614" y="136" width="466" height="140" fill="#161b22" rx="8" stroke="#34d399" stroke-width="1.6"/>
+  <text x="632" y="172" fill="#e6edf3" font-size="17" font-weight="600">reconcile</text>
+  <text x="790" y="172" fill="#3fb950" font-size="12">stdlib only · hourly timer</text>
+  <text x="632" y="204" fill="#8b949e" font-size="12">checks every invariant against the live box:</text>
+  <text x="632" y="228" fill="#a4aab4" font-size="12">binds loopback · sole user · ufw deny-in · gzip-checked</text>
+  <text x="632" y="246" fill="#a4aab4" font-size="12">backups keep-7 · off-box copy fresh ≤ 48 h · no containers</text>
+
+  <!-- silent chip -->
+  <rect x="630" y="300" width="150" height="44" fill="#161b22" rx="7" stroke="#238636" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text x="644" y="326" fill="#3fb950" font-size="13">clean → silent</text>
+
+  <!-- drift report -->
+  <rect x="900" y="308" width="220" height="124" fill="#161b22" rx="8" stroke="#d29922" stroke-width="1.5"/>
+  <text x="916" y="342" fill="#e6edf3" font-size="15" font-weight="600">drift_report</text>
+  <text x="916" y="368" fill="#8b949e" font-size="12">{ severity · invariant_broken ·</text>
+  <text x="928" y="386" fill="#8b949e" font-size="12">needs_human · proposal }</text>
+  <text x="916" y="414" fill="#d29922" font-size="12">the tool names what it saw</text>
+
+  <!-- stem -->
+  <rect x="64" y="466" width="340" height="126" fill="#161b22" rx="8" stroke="#d29922" stroke-width="1.5"/>
+  <text x="82" y="500" fill="#e6edf3" font-size="16" font-weight="600">stem — llama-server</text>
+  <text x="82" y="526" fill="#8b949e" font-size="12">loopback 127.0.0.1:8811 · tiny model</text>
+  <text x="82" y="546" fill="#8b949e" font-size="12">weights on disk · sha-pinned · 0 internet</text>
+  <text x="82" y="568" fill="#d29922" font-size="12">drafts the plan. it can be wrong.</text>
+
+  <!-- grammar pin badge -->
+  <rect x="64" y="618" width="340" height="44" fill="#161b22" rx="7" stroke="#f85149" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <text x="82" y="640" fill="#f85149" font-size="11.5">GRAMMAR PIN — applied at decode time:</text>
+  <text x="82" y="656" fill="#f85149" font-size="12">applies_without_gate = "false"</text>
+
+  <!-- gate -->
+  <rect x="460" y="466" width="270" height="126" fill="#161b22" rx="8" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="478" y="500" fill="#e6edf3" font-size="16" font-weight="600">gate — deterministic</text>
+  <text x="478" y="526" fill="#a4aab4" font-size="12">· autonomy L0–L3 vs the charter</text>
+  <text x="478" y="546" fill="#a4aab4" font-size="12">· every target is a reconcile fact</text>
+  <text x="478" y="570" fill="#fb7185" font-size="12">run #2: an invented file → refused</text>
+
+  <!-- refused chip -->
+  <rect x="430" y="614" width="270" height="44" fill="#161b22" rx="7" stroke="#f85149" stroke-width="1.3"/>
+  <text x="446" y="640" fill="#f85149" font-size="13">refused → nothing ran, drift stays visible</text>
+
+  <!-- apply -->
+  <rect x="760" y="466" width="230" height="126" fill="#161b22" rx="8" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="778" y="500" fill="#e6edf3" font-size="16" font-weight="600">apply</text>
+  <text x="778" y="526" fill="#a4aab4" font-size="12">behind the operator's word.</text>
+  <text x="778" y="546" fill="#a4aab4" font-size="12">irreversible = word ×2.</text>
+  <text x="778" y="572" fill="#3fb950" font-size="12">then re-freeze — loop closes</text>
+
+  <!-- loop label -->
+  <text x="336" y="104" fill="#8b949e" font-size="12">re-freeze → next generation · the git pointer is the rollback</text>
+
+  <!-- wire labels -->
+  <text x="316" y="150" fill="#8b949e" font-size="10" text-anchor="middle">compile</text>
+  <text x="316" y="164" fill="#4d5966" font-size="9"  text-anchor="middle">schema Draft7</text>
+  <text x="578" y="150" fill="#8b949e" font-size="10" text-anchor="middle">hourly</text>
+  <text x="578" y="164" fill="#4d5966" font-size="9"  text-anchor="middle">timer</text>
+  <text x="704" y="290" fill="#3fb950" font-size="10">clean</text>
+  <text x="1028" y="296" fill="#d29922" font-size="11">drift</text>
+  <text x="420" y="358" fill="#8b949e" font-size="11">facts + hints feed the stem</text>
+  <text x="232" y="612" fill="#f85149" font-size="10">the stem cannot exempt itself</text>
+  <text x="560" y="606" fill="#f85149" font-size="10">reject</text>
+  <text x="415" y="458" fill="#8b949e" font-size="10">plan.json</text>
+  <text x="718" y="458" fill="#3fb950" font-size="10">admissible</text>
+
+  <!-- bottom rail -->
+  <rect x="32"  y="706" width="290" height="44" fill="#161b22" rx="7" stroke="#30363d" stroke-width="1"/>
+  <text x="46" y="732" fill="#a4aab4" font-size="12">ship · nightly off-box copy, sha-verified</text>
+  <rect x="356" y="706" width="290" height="44" fill="#161b22" rx="7" stroke="#30363d" stroke-width="1"/>
+  <text x="370" y="732" fill="#a4aab4" font-size="12">alerts · speak on drift, silent on clean</text>
+  <rect x="680" y="706" width="330" height="44" fill="#161b22" rx="7" stroke="#30363d" stroke-width="1"/>
+  <text x="694" y="732" fill="#a4aab4" font-size="12">face · in-browser whisper on loopback, airgap-proven</text>
+</svg>
+</body>
+</html>
