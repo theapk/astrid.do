@@ -1,0 +1,6 @@
+[Unit]
+Description=Astrid nightly warehouse ship (off-box backups)
+Wants=network-online.target
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/astrid-cadence.sh ship

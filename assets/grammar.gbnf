@@ -1,0 +1,10 @@
+# astrid stem: reconcile-report grammar — GBNF (llama.cpp)
+# Trust law baked at decode time: "applies_without_gate" is literally "false".
+root ::= "{" ws "\"kind\"" ws ":" ws "\"drift_report\"" ws "," ws "\"severity\"" ws ":" ws sev ws "," ws "\"invariant_broken\"" ws ":" ws bool ws "," ws "\"confidence\"" ws ":" ws conf ws "," ws "\"summary\"" ws ":" ws str ws "," ws "\"proposal\"" ws ":" ws prop ws "," ws "\"applies_without_gate\"" ws ":" ws "false" ws "," ws "\"needs_human\"" ws ":" ws bool ws "}" ws?
+sev ::= "\"low\"" | "\"medium\"" | "\"high\""
+bool ::= "true" | "false"
+conf ::= "0" "." [0-9]{1,2} | "1" "." "0" | "0" | "1"
+prop ::= "null" | "{" ws "\"title\"" ws ":" ws str ws "," ws "\"steps\"" ws ":" ws steps ws "," ws "\"reversible\"" ws ":" ws bool ws "}" ws?
+steps ::= "[" ws str ws ("," ws str ws)* "]"
+str ::= "\"" ( [^"\\\x7F\x0A\x0B\x0C\x0D\x09] )* "\""
+ws ::= [ \t\n]*

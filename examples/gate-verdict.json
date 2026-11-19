@@ -1,0 +1,30 @@
+{
+  "gate": "astrid/contract v1",
+  "plan_producer": "stem (grammar-governed) from reconcile facts",
+  "needs_human": true,
+  "reversible": true,
+  "steps": [
+    {
+      "step": "Step 1: Verify that all 10 invariants are satisfied",
+      "domain": "services",
+      "L": "L1",
+      "auto_allowed": false
+    },
+    {
+      "step": "Step 2: Confirm that the machine matches the charter revision 6",
+      "domain": "services",
+      "L": "L1",
+      "auto_allowed": false
+    },
+    {
+      "step": "Step 3: Document the reconciliation status",
+      "domain": "services",
+      "L": "L1",
+      "auto_allowed": false
+    }
+  ],
+  "apply_word_required": true,
+  "admissible": false,
+  "fabricated_targets_refused": 0,
+  "summary": "no auto-apply path; operator word required"
+}

@@ -1,0 +1,44 @@
+{
+  "kind": "drift_report",
+  "severity": "low",
+  "invariant_broken": false,
+  "confidence": 0.99,
+  "summary": "All 10 invariants hold; machine matches charter rev 6",
+  "proposal": {
+    "title": "Machine Astrid Reconciliation Report",
+    "steps": [
+      "Step 1: Verify that all 10 invariants are satisfied",
+      "Step 2: Confirm that the machine matches the charter revision 6",
+      "Step 3: Document the reconciliation status"
+    ],
+    "reversible": true
+  },
+  "applies_without_gate": "false",
+  "needs_human": true,
+  "producer": "stem (grammar-governed) from reconcile facts",
+  "facts": {
+    "daemon 7731 binds loopback only": "127.0.0.1:7731",
+    "face 7741 binds loopback only": "127.0.0.1:7741",
+    "stem 8811 binds loopback only": "127.0.0.1:8811",
+    "containers": "absent",
+    "users": [
+      "bot"
+    ],
+    "health": 200,
+    "ufw": {
+      "deny_incoming": true,
+      "lan_22": true,
+      "tailscale": true
+    },
+    "backups": {
+      "count": 2,
+      "newest_verify": true
+    },
+    "ship": {
+      "age_s": 8167,
+      "fresh": true
+    }
+  },
+  "hints": [],
+  "charter_revision": 6
+}

@@ -1,0 +1,11 @@
+#!/bin/sh
+# astrid cadence wrapper — what /etc/systemd/system/astrid-*.service calls.
+# Copy to /usr/local/bin/astrid-cadence.sh and point the env at your layout.
+set -eu
+export ASTRID_TOOLS="/opt/astrid/tools"
+export ASTRID_CHARTER="/var/lib/astrid/charter.json"
+export ASTRID_GRAMMAR="/opt/astrid/assets/grammar.gbnf"
+export ASTRID_ALERT_CHAT="000000000"          # drift-alert chat id
+# export ASTRID_ALERT_TOKEN="/etc/astrid/tg-token"  # path to token file (0600)
+export ASTRID_WAREHOUSE_HOST="warehouse.example.invalid"
+exec /opt/astrid/tools/cadence.sh "$@"

@@ -6,6 +6,7 @@ import hashlib, json, os, subprocess, glob, time
 
 KEY = "/etc/astrid/warehouse_key"
 import os as _os
+USER = _os.environ.get("ASTRID_SHIP_USER", "operator")
 HOST = _os.environ.get("ASTRID_WAREHOUSE_HOST", "warehouse.example.invalid")
 STATE = "/var/lib/astrid/ship-state.json"
 
@@ -27,7 +28,7 @@ def ship() -> dict:
             continue
         r = subprocess.run(
             ["ssh", "-i", KEY, "-o", "BatchMode=yes", "-o", "ConnectTimeout=10",
-             "-o", "StrictHostKeyChecking=accept-new", "-T", "bot@" + HOST,
+             "-o", "StrictHostKeyChecking=accept-new", "-T", USER + "@" + HOST,
              "astrid-ship " + name + " " + sha],
             input=data, capture_output=True, timeout=120)
         out = (r.stdout.decode() or "").strip().splitlines()

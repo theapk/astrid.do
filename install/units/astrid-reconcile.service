@@ -1,0 +1,5 @@
+[Unit]
+Description=Astrid reconcile cycle (charter invariants + drift alert)
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/astrid-cadence.sh reconcile

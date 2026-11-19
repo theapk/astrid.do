@@ -54,11 +54,19 @@ The model can word the plan; it cannot decide what is true.
    reconciler's hints through `tools/plan.py`, and keep the gate between the
    model and anything it touches.
 
+Full copy-paste quickstart (timers, env wiring, serve command) lives in
+[`install/README.md`](install/README.md); the models, their sizes and the
+sha-pinning procedure are in [`docs/models.md`](docs/models.md).
+
 ## Repo map
 
 ```
 charter/   example.yaml (worked example) · schema.json · format.md · contract.md
 tools/     charter_compile · reconcile · plan · gate · ship · cadence
+examples/  real captured artifacts: drift.json · plan.json · gate-verdict.json
+install/   drop-in systemd units + cadence wrapper + quickstart
+assets/    grammar.gbnf (the decode-time pin) · banner · system diagram
+docs/      models.md — stem/ASR models, sizes, sha law
 ```
 
 ## Laws worth restating

@@ -1,0 +1,5 @@
+[Unit]
+Description=astrid nightly home+config backup
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/astrid-backup.sh
