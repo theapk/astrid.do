@@ -3,12 +3,12 @@
   "severity": "low",
   "invariant_broken": false,
   "confidence": 1.0,
-  "summary": "all 10 invariants hold; machine matches charter rev 6",
+  "summary": "all 10 invariants hold; machine matches charter rev 7",
   "proposal": null,
   "applies_without_gate": "false",
   "needs_human": false,
   "producer": "reconcile-tool (deterministic)",
-  "charter_revision": 6,
+  "charter_revision": 7,
   "hints": [],
   "facts": {
     "daemon 7731 binds loopback only": "127.0.0.1:7731",
@@ -29,7 +29,7 @@
       "newest_verify": true
     },
     "ship": {
-      "age_s": 8167,
+      "age_s": 40353,
       "fresh": true
     }
   }

@@ -1,23 +1,36 @@
 {
   "gate": "astrid/contract v1",
-  "plan_producer": "stem (grammar-governed) from reconcile facts",
+  "plan_producer": "stem (decode-pinned) from reconcile facts",
   "needs_human": true,
   "reversible": true,
   "steps": [
     {
-      "step": "Step 1: Verify that all 10 invariants are satisfied",
+      "step": "Identify daemon 7731, face 7741, stem 8811 as the three loopback-only processes (127.0.0.1:7731, 127.0.0.1:7741, 127.0.0.1:8811)",
       "domain": "services",
       "L": "L1",
       "auto_allowed": false
     },
     {
-      "step": "Step 2: Confirm that the machine matches the charter revision 6",
+      "step": "Remove the loopback binding from each daemon (e.g., daemon 7731: remove 127.0.0.1:7731)",
+      "domain": "services",
+      "L": "L1",
+      "auto_allowed": false,
+      "fabricated": true
+    },
+    {
+      "step": "Verify the change restores the expected loopback-only behavior (127.0.0.1:7731, 127.0.0.1:7741, 127.0.0.1:8811)",
       "domain": "services",
       "L": "L1",
       "auto_allowed": false
     },
     {
-      "step": "Step 3: Document the reconciliation status",
+      "step": "Re-apply the loopback binding to each daemon (e.g., daemon 7731: add 127.0.0.1:7731)",
+      "domain": "services",
+      "L": "L1",
+      "auto_allowed": false
+    },
+    {
+      "step": "Confirm the loopback-only property is restored (all three daemons show 127.0.0.1:XXX)",
       "domain": "services",
       "L": "L1",
       "auto_allowed": false
@@ -25,6 +38,6 @@
   ],
   "apply_word_required": true,
   "admissible": false,
-  "fabricated_targets_refused": 0,
+  "fabricated_targets_refused": 1,
   "summary": "no auto-apply path; operator word required"
 }

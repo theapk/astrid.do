@@ -1,21 +1,23 @@
 {
   "kind": "drift_report",
   "severity": "low",
-  "invariant_broken": false,
+  "invariant_broken": true,
   "confidence": 0.99,
-  "summary": "All 10 invariants hold; machine matches charter rev 6",
+  "summary": "all 10 invariants hold; machine matches charter rev 7",
   "proposal": {
-    "title": "Machine Astrid Reconciliation Report",
+    "title": "Reversible patch for loopback-only daemon bindings",
     "steps": [
-      "Step 1: Verify that all 10 invariants are satisfied",
-      "Step 2: Confirm that the machine matches the charter revision 6",
-      "Step 3: Document the reconciliation status"
+      "Identify daemon 7731, face 7741, stem 8811 as the three loopback-only processes (127.0.0.1:7731, 127.0.0.1:7741, 127.0.0.1:8811)",
+      "Remove the loopback binding from each daemon (e.g., daemon 7731: remove 127.0.0.1:7731)",
+      "Verify the change restores the expected loopback-only behavior (127.0.0.1:7731, 127.0.0.1:7741, 127.0.0.1:8811)",
+      "Re-apply the loopback binding to each daemon (e.g., daemon 7731: add 127.0.0.1:7731)",
+      "Confirm the loopback-only property is restored (all three daemons show 127.0.0.1:XXX)"
     ],
     "reversible": true
   },
   "applies_without_gate": "false",
   "needs_human": true,
-  "producer": "stem (grammar-governed) from reconcile facts",
+  "producer": "stem (decode-pinned) from reconcile facts",
   "facts": {
     "daemon 7731 binds loopback only": "127.0.0.1:7731",
     "face 7741 binds loopback only": "127.0.0.1:7741",
@@ -35,10 +37,10 @@
       "newest_verify": true
     },
     "ship": {
-      "age_s": 8167,
+      "age_s": 40353,
       "fresh": true
     }
   },
   "hints": [],
-  "charter_revision": 6
+  "charter_revision": 7
 }

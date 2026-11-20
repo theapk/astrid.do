@@ -111,6 +111,7 @@
       "additionalProperties": false,
       "properties": {
         "stem": { "type": "object" },
+        "assistant_brain": { "type": "object" },
         "face": { "type": "string" },
         "architect": { "type": "string" }
       }
