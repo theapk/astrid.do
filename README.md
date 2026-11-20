@@ -8,6 +8,12 @@ Machines like this are **AS — an Astrid Server, not an OS**. One charter file
 declares the whole box; the machine reconciles to it forever; the brain holds
 zero root.
 
+<p align="center"><a href="assets/astrid-listening.gif"><img src="assets/astrid-listening.gif" alt="the face in her listening state" width="420"></a></p>
+
+This is her — the face of the box, captured mid-listening. Her eyes carry the
+state (listening green / thinking amber / speaking blue) and nothing else
+shows: no chrome, no glow, just the face and what it is doing.
+
 A charter is an honest text file: every line is a true statement about the
 machine *today* — network, services, firewall, backups, even the small models
 that live on disk with their sha256s pinned into the file. It compiles to
@@ -32,6 +38,26 @@ only admits steps whose targets the reconciler actually observed.
 | gate | `tools/gate.py` | autonomy L-levels + fabrication cross-check; never asks the model |
 | ship | `tools/ship.py` | nightly off-box copy, sha-verified on the receive side |
 | cadence | `tools/cadence.sh` | timer glue: hourly reconcile, daily ship, transition-only alerts |
+
+## The face
+
+Behind the charter sits a working companion face, built with the same
+stdlib-only discipline:
+
+- **States in the eyes** — idle, listening, thinking, speaking; captions and
+  content lanes for everything else. Flat by law: no gradients, no glow.
+- **Voice, end to end, on-box** — mic → VAD → speech-to-text → the on-box stem
+  model → text-to-speech, all serviced by the same small models the charter
+  pins by sha. Prepare-all synthesis and sub-100 ms barge-in make the
+  conversation feel live.
+- **Show lanes** — spoken asks and hotkeys summon live content instead of
+  answers: gauge panels for CPU/RAM/disk/services, a 3D map of the filesystem
+  and services with real-data color tiers and a per-node detail panel, and a
+  real terminal session that runs as an unprivileged user.
+- **No remote calls** — the face is one Python process and one HTML page;
+  the heavy libs (3D graph, terminal emulator) are vendored, not fetched.
+
+`assets/astrid-idle.png` is the face at rest at full width.
 
 ## Why the gate exists
 
@@ -68,6 +94,7 @@ tools/     charter_compile · reconcile · plan · gate · ship · cadence
 examples/  real captured artifacts: drift.json · plan.json · gate-verdict.json
 install/   drop-in systemd units + cadence wrapper + quickstart
 assets/    grammar.gbnf (the decode-time pin) · banner · system diagram
+           face capture (astrid-listening.gif) + idle still (astrid-idle.png)
 docs/      models.md — stem/ASR models, sizes, sha law
            system-requirements.md — CPU/RAM/disk tiers, measured
 ```
