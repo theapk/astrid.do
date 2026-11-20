@@ -56,7 +56,9 @@ The model can word the plan; it cannot decide what is true.
 
 Full copy-paste quickstart (timers, env wiring, serve command) lives in
 [`install/README.md`](install/README.md); the models, their sizes and the
-sha-pinning procedure are in [`docs/models.md`](docs/models.md).
+sha-pinning procedure are in [`docs/models.md`](docs/models.md). Minimum
+hardware (2c/2 GB headless, 4 GB with the face — measured, no GPU) is in
+[`docs/system-requirements.md`](docs/system-requirements.md).
 
 ## Repo map
 
@@ -67,6 +69,7 @@ examples/  real captured artifacts: drift.json · plan.json · gate-verdict.json
 install/   drop-in systemd units + cadence wrapper + quickstart
 assets/    grammar.gbnf (the decode-time pin) · banner · system diagram
 docs/      models.md — stem/ASR models, sizes, sha law
+           system-requirements.md — CPU/RAM/disk tiers, measured
 ```
 
 ## Laws worth restating
